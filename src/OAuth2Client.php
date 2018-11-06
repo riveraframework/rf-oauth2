@@ -215,22 +215,24 @@ class OAuth2Client {
 
 	}
 
-	public function clearAll() {
+    /**
+     * Clear the session
+     *
+     * @return bool
+     */
+    public function clearAll() {
 
-//		if(Cookie::cookieExist(Authentication::$userSessionName) === true) {
-//			Cookie::deleteCookie(Authentication::$userSessionName);
-//		}
+        if(isset($_SESSION)) {
+            unset($_SESSION['oauth2state']);
+            unset($_SESSION['access_token']);
+            unset($_SESSION['custom_access_token']);
+        }
 
-		unset($_SESSION['oauth2state']);
-		unset($_SESSION['access_token']);
-		unset($_SESSION['custom_access_token']);
-//		unset($_SESSION[Authentication::$userSessionName]);
+        // @TODO: Revoke token
 
-		// @TODO: Revoke token
+        return true;
 
-		return true;
-
-	}
+    }
 
 	/**
 	 * Send an authenticated request
